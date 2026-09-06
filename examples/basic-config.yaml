@@ -1,0 +1,121 @@
+# Complete single-task configuration.
+# Validate with: scraper validate examples/basic-config.yaml
+# Run with: scraper scrape examples/basic-config.yaml
+# Selectors are illustrative because example.com is a documentation domain.
+
+name: complete-example-task
+url: https://example.com
+
+output:
+  directory: ./downloads/example
+  filename: example-item
+  prefix: example-
+  suffix: -download
+  startIndex: 1
+  numberPadding: 3
+  numberingStyle: sequential # sequential | timestamp | uuid | none
+  onConflict: rename # overwrite | skip | rename | fail
+  concurrency: 5
+  dryRun: false
+
+browser:
+  engine: auto # static | dynamic | auto
+  headless: true
+  timeout: 30000
+  navigationTimeout: 30000
+  waitForSelector: '#content'
+  waitForTimeoutMs: 500
+  userAgent: 'Mozilla/5.0 (compatible; dynamic-scraper-example/1.0)'
+  headers:
+    Accept: text/html
+    Accept-Language: en-US,en;q=0.9
+  cookies:
+    - name: session
+      value: example-session
+      domain: example.com
+      path: /
+  proxy:
+    server: http://127.0.0.1:8080
+    username: example-user
+    password: example-password
+  viewport:
+    width: 1280
+    height: 720
+  actions:
+    - type: click
+      selector: '#accept-cookies'
+      optional: true
+    - type: scroll
+      amount: 600
+      toBottom: false
+    - type: wait
+      ms: 500
+    - type: wait
+      selector: '#content'
+    - type: type
+      selector: '#search'
+      text: example
+    - type: press
+      key: Enter
+
+# Optional custom filters:
+# customFiltersPath: ./filters.mjs
+
+filters:
+  include: ['example']
+  exclude: ['placeholder']
+  regex: ['example']
+  wildcard: ['*example*']
+  extensions: [jpg, jpeg, png, webp]
+  mimeTypes: [image/*]
+  minSize: 100
+  maxSize: 10000000
+  domains: [example.com]
+  subdomains: [cdn.example.com]
+  maxDepth: 0
+  maxResults: 100
+  minResults: 1
+  attributes:
+    class: content
+  cssClasses: [content, featured]
+  namePattern: '*example*'
+  urlPattern: '*example.com*'
+  # custom: [onlyLandscape]
+
+targets:
+  - type: image
+    name: example-images
+    selector: 'img'
+    attribute: data-src
+    filters:
+      extensions: [jpg, jpeg, png, webp]
+  - type: link
+    name: example-links
+    selector: 'a'
+    attribute: href
+  - type: file
+    name: example-files
+    selector: 'a.download'
+    attribute: href
+  - type: text
+    name: example-text
+    selector: 'main'
+  - type: heading
+    name: example-headings
+    selector: 'h1, h2, h3'
+  - type: table
+    name: example-tables
+    selector: 'table'
+  - type: attribute
+    name: example-attributes
+    selector: '[data-value]'
+    attribute: data-value
+  - type: css
+    name: example-elements
+    selector: '.content'
+  - type: xpath
+    name: example-xpath
+    xpath: "//main//*[contains(@class, 'content')]"
+
+logging:
+  level: verbose # silent | error | warn | info | debug | verbose

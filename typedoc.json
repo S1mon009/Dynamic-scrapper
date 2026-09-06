@@ -1,0 +1,27 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["src/index.ts"],
+  "out": "docs/api",
+  "excludePrivate": true,
+  "excludeInternal": true,
+  "readme": "README.md",
+  "projectDocuments": [
+    "docs/architecture.md",
+    "docs/cli.md",
+    "docs/configuration.md",
+    "docs/filters.md",
+    "docs/tree.md"
+  ],
+  "searchInDocuments": true,
+  "name": "dynamic-scraper",
+  "includeVersion": true,
+  "sort": ["source-order"],
+  "categorizeByGroup": true,
+  "entryPointStrategy": "resolve",
+  "exclude": ["**/*.test.ts", "src/cli/**"],
+  "navigation": {
+    "includeGroups": true,
+    "includeCategories": true
+  },
+  "searchInComments": true
+}

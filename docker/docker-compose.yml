@@ -1,0 +1,26 @@
+services:
+  # Static engine only — the default, and the one you want unless a target
+  # site needs JS rendering.
+  #   docker compose run --rm scraper scrape https://example.com --type image --selector img
+  #   docker compose run --rm scraper scrape /config/scraper.config.yaml
+  scraper:
+    build:
+      context: .
+      target: runtime-slim
+    image: dynamic-scraper:slim
+    volumes:
+      - ./downloads:/app/downloads
+      - ./:/config:ro
+    working_dir: /app
+
+  # Adds Chromium for --engine dynamic / SPA pages.
+  #   docker compose run --rm scraper-dynamic scrape /config/scraper.config.yaml --engine dynamic
+  scraper-dynamic:
+    build:
+      context: .
+      target: runtime-full
+    image: dynamic-scraper:full
+    volumes:
+      - ./downloads:/app/downloads
+      - ./:/config:ro
+    working_dir: /app

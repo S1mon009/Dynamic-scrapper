@@ -1,0 +1,112 @@
+{
+  "tree": {
+    "name": "example-site-tree",
+    "output": {
+      "directory": "./downloads/example-tree",
+      "filename": "item",
+      "prefix": "example-",
+      "suffix": "-tree",
+      "startIndex": 1,
+      "numberPadding": 3,
+      "numberingStyle": "sequential",
+      "onConflict": "rename",
+      "concurrency": 5,
+      "dryRun": false
+    },
+    "browser": {
+      "engine": "auto",
+      "headless": true,
+      "timeout": 30000,
+      "navigationTimeout": 30000,
+      "waitForSelector": "#content",
+      "waitForTimeoutMs": 500,
+      "userAgent": "dynamic-scraper-tree-example/1.0",
+      "headers": { "Accept": "text/html" },
+      "cookies": [],
+      "viewport": { "width": 1280, "height": 720 },
+      "actions": [
+        { "type": "click", "selector": "#accept-cookies", "optional": true },
+        { "type": "scroll", "toBottom": true }
+      ]
+    },
+    "filters": {
+      "extensions": ["jpg", "jpeg", "png", "webp"],
+      "mimeTypes": ["image/*"],
+      "domains": ["example.com"],
+      "maxDepth": 1,
+      "maxResults": 100,
+      "minResults": 1
+    },
+    "logging": { "level": "info" },
+    "folder": "sections",
+    "children": [
+      {
+        "name": "Home",
+        "url": "https://example.com",
+        "output": { "directory": "./downloads/example-tree/home" },
+        "targets": [
+          { "type": "heading", "name": "home-headings", "selector": "h1, h2" },
+          { "type": "link", "name": "home-links", "selector": "a", "attribute": "href" }
+        ]
+      },
+      {
+        "name": "Products",
+        "url": "https://example.com/products",
+        "output": {
+          "directory": "./downloads/example-tree/products",
+          "numberingStyle": "timestamp",
+          "onConflict": "skip"
+        },
+        "filters": { "include": ["product"], "maxDepth": 0 },
+        "targets": [
+          {
+            "type": "image",
+            "name": "product-images",
+            "selector": ".product-card img",
+            "attribute": "data-src",
+            "filters": { "extensions": ["jpg", "jpeg", "png", "webp"], "minSize": 5000 }
+          },
+          { "type": "text", "name": "product-titles", "selector": ".product-card .title" }
+        ]
+      },
+      {
+        "name": "Gallery",
+        "url": "https://example.com/gallery",
+        "output": { "directory": "./downloads/example-tree/gallery" },
+        "targets": [
+          {
+            "type": "image",
+            "name": "gallery-images",
+            "selector": "#gallery img",
+            "filters": {
+              "domains": ["cdn.example.com"],
+              "wildcard": ["*gallery*"],
+              "maxResults": 50
+            }
+          }
+        ]
+      },
+      {
+        "name": "Data",
+        "url": "https://example.com/data",
+        "output": { "directory": "./downloads/example-tree/data" },
+        "browser": {
+          "engine": "dynamic",
+          "waitForSelector": "#data-loaded",
+          "proxy": { "server": "http://127.0.0.1:8080" }
+        },
+        "targets": [
+          { "type": "table", "name": "data-tables", "selector": "table" },
+          {
+            "type": "attribute",
+            "name": "data-values",
+            "selector": "[data-value]",
+            "attribute": "data-value"
+          },
+          { "type": "css", "name": "data-elements", "selector": ".data-row" },
+          { "type": "xpath", "name": "data-xpath", "xpath": "//div[contains(@class, 'data-row')]" }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,122 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  id-token: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          registry-url: 'https://registry.npmjs.org'
+
+      - run: npm ci
+      - run: npm run validate
+      - run: npm run build
+
+      # semantic-release reads Conventional Commits since the last tag to
+      # decide the next version (or skip entirely if nothing warrants a
+      # release), writes CHANGELOG.md, tags, creates a GitHub Release, and
+      # publishes to npm — see docs/publishing.md for the full flow.
+      #
+      # npm auth: prefers OIDC "trusted publishing" (no secret at all) once
+      # you've configured it on npmjs.com for this repo+workflow — that's
+      # what `id-token: write` above is for. Until then, NPM_TOKEN is the
+      # fallback (and is required for the very first publish regardless,
+      # since trusted publishing can only be configured for a package that
+      # already exists). Once trusted publishing is set up, you can delete
+      # the NPM_TOKEN secret entirely — semantic-release will use OIDC.
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release
+
+  docker-publish:
+    needs: release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      # Fresh checkout so package.json reflects the version semantic-release
+      # just committed. Runs on every successful push to main, not only
+      # ones that actually bumped the version — harmless (it just re-pushes
+      # the same tag unchanged) but not the tightest possible gating. Gate
+      # more strictly with cycjimmy/semantic-release-action's
+      # `new-release-published` output if you want push-on-release-only.
+      - uses: actions/checkout@v4
+
+      - name: Read package version
+        id: pkg
+        run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push (slim — static engine only)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          target: runtime-slim
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}:latest
+            ghcr.io/${{ github.repository }}:${{ steps.pkg.outputs.version }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build and push (full — adds Chromium)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          target: runtime-full
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}:latest-full
+            ghcr.io/${{ github.repository }}:${{ steps.pkg.outputs.version }}-full
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      # Optional: also push to Docker Hub. Uncomment and add
+      # DOCKERHUB_USERNAME / DOCKERHUB_TOKEN repo secrets (an access token,
+      # not your password — create one at hub.docker.com → Account
+      # Settings → Security). See docs/publishing.md.
+      # - name: Log in to Docker Hub
+      #   uses: docker/login-action@v3
+      #   with:
+      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
+      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
+      # - name: Build and push to Docker Hub (slim)
+      #   uses: docker/build-push-action@v6
+      #   with:
+      #     context: .
+      #     target: runtime-slim
+      #     push: true
+      #     tags: |
+      #       ${{ secrets.DOCKERHUB_USERNAME }}/dynamic-scraper:latest
+      #       ${{ secrets.DOCKERHUB_USERNAME }}/dynamic-scraper:${{ steps.pkg.outputs.version }}
