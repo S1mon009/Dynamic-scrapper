@@ -86,8 +86,8 @@ jobs:
           target: runtime-slim
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}:latest
-            ghcr.io/${{ github.repository }}:${{ steps.pkg.outputs.version }}
+            ghcr.io/${{ github.repository | lower }}:latest
+            ghcr.io/${{ github.repository | lower }}:${{ steps.pkg.outputs.version }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -99,8 +99,8 @@ jobs:
           target: runtime-full
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}:latest-full
-            ghcr.io/${{ github.repository }}:${{ steps.pkg.outputs.version }}-full
+            ghcr.io/${{ github.repository | lower }}:latest-full
+            ghcr.io/${{ github.repository | lower }}:${{ steps.pkg.outputs.version }}-full
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
