@@ -6,7 +6,7 @@
   "license": "MIT",
   "author": "S1mon009",
   "bin": {
-    "scraper": "./bin/scraper.js"
+    "scraper": "bin/scraper.js"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
