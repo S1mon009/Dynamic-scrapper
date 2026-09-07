@@ -63,7 +63,7 @@
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
     "@eslint/js": "^9.11.1",
-    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^11.0.1",
     "@types/cli-progress": "^3.11.6",
     "@types/js-yaml": "^4.0.9",
