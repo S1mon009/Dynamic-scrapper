@@ -38,9 +38,8 @@ jobs:
       # release), writes CHANGELOG.md, tags, creates a GitHub Release, and
       # publishes to npm — see docs/publishing.md for the full flow.
       #
-      # npm auth uses OIDC trusted publishing; configure this workflow as a
-      # Trusted Publisher for the package on npmjs.com. The id-token
-      # permission above is required for the short-lived publish token.
+      # npm auth uses npm Trusted Publishing via OIDC. Configure this
+      # repository and workflow as a Trusted Publisher on npmjs.com.
       - name: Release
         run: npx semantic-release
         env:
