@@ -69,6 +69,10 @@ jobs:
         id: pkg
         run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
 
+      - name: Normalize image name
+        id: image
+        run: echo "name=ghcr.io/$(echo "$GITHUB_REPOSITORY" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
+
       - uses: docker/setup-buildx-action@v3
 
       - name: Log in to GitHub Container Registry
@@ -86,8 +90,8 @@ jobs:
           target: runtime-slim
           push: true
           tags: |
-            ghcr.io/${{ github.repository | lower }}:latest
-            ghcr.io/${{ github.repository | lower }}:${{ steps.pkg.outputs.version }}
+            ${{ steps.image.outputs.name }}:latest
+            ${{ steps.image.outputs.name }}:${{ steps.pkg.outputs.version }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -99,8 +103,8 @@ jobs:
           target: runtime-full
           push: true
           tags: |
-            ghcr.io/${{ github.repository | lower }}:latest-full
-            ghcr.io/${{ github.repository | lower }}:${{ steps.pkg.outputs.version }}-full
+            ${{ steps.image.outputs.name }}:latest-full
+            ${{ steps.image.outputs.name }}:${{ steps.pkg.outputs.version }}-full
           cache-from: type=gha
           cache-to: type=gha,mode=max
 

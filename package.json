@@ -1,6 +1,6 @@
 {
   "name": "dynamic-scraper",
-  "version": "06.09.2026",
+  "version": "1.0.0",
   "description": "Production-grade CLI for scraping static and JavaScript-rendered websites, with composable filters, hierarchical (tree) task configuration and pluggable scraper strategies.",
   "type": "module",
   "license": "MIT",

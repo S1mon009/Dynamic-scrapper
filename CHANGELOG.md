@@ -1,3 +1,11 @@
+# 1.0.0 (2026-09-07)
+
+
+### Bug Fixes
+
+* **ci:** prevent release commit lint failure ([233fdb4](https://github.com/S1mon009/Dynamic-scrapper/commit/233fdb4a5da0fdf02c86afdddcf44046cb061230))
+* repeair github actions errors ([6c57004](https://github.com/S1mon009/Dynamic-scrapper/commit/6c5700427643e137d02fbf638269d7918a331d8e))
+
 # Changelog
 
 All notable changes to this project are documented in this file,
