@@ -42,6 +42,8 @@ jobs:
       # permission above is required for the short-lived publish token.
       - name: Release
         run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   docker-publish:
     needs: release
