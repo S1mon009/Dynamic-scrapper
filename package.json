@@ -1,5 +1,5 @@
 {
-  "name": "dynamic-scraper",
+  "name": "@s1mon009/dynamic-scraper",
   "version": "1.0.0",
   "description": "Production-grade CLI for scraping static and JavaScript-rendered websites, with composable filters, hierarchical (tree) task configuration and pluggable scraper strategies.",
   "type": "module",
@@ -25,8 +25,12 @@
     "README.md",
     "LICENSE"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/S1mon009/Dynamic-scrapper.git"
+  },
   "publishConfig": {
-    "access": "public"
+    "registry": "https://npm.pkg.github.com"
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
