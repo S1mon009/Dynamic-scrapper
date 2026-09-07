@@ -1,3 +1,14 @@
+## [1.0.1](https://github.com/S1mon009/Dynamic-scrapper/compare/v1.0.0...v1.0.1) (2026-09-07)
+
+
+### Bug Fixes
+
+* **ci:** normalize GHCR image name to lowercase ([0881d9e](https://github.com/S1mon009/Dynamic-scrapper/commit/0881d9eebf340c3d484a3bde6ea8630b66ea5355))
+* **ci:** normalize GHCR image name to lowercase ([9d3ebbd](https://github.com/S1mon009/Dynamic-scrapper/commit/9d3ebbd871c6d7a1db961f44958febf768cf9357))
+* **ci:** normalize GHCR image name to lowercase ([1e02e5b](https://github.com/S1mon009/Dynamic-scrapper/commit/1e02e5b41376be7d6fd584444dfbbf756948fd2d))
+* **ci:** normalize GHCR image name to lowercase ([a87e611](https://github.com/S1mon009/Dynamic-scrapper/commit/a87e611eebb50de130dd6aa2c7a21ffaa18a182e))
+* **ci:** prevent release commit lint failure ([a01aa88](https://github.com/S1mon009/Dynamic-scrapper/commit/a01aa8868f9dfb7b1e6f10a2861fc85bfae4c197))
+
 # 1.0.0 (2026-09-07)
 
 
