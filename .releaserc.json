@@ -17,6 +17,12 @@
       }
     ],
     [
+      "@semantic-release/exec",
+      {
+        "publishCmd": "npm config set //npm.pkg.github.com/:_authToken=\"$GITHUB_TOKEN\" && npm publish --registry=https://npm.pkg.github.com"
+      }
+    ],
+    [
       "@semantic-release/git",
       {
         "assets": ["CHANGELOG.md", "package.json"],
