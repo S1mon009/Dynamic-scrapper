@@ -38,43 +38,14 @@ jobs:
       # release), writes CHANGELOG.md, tags, creates a GitHub Release, and
       # publishes to npm — see docs/publishing.md for the full flow.
       #
-      # npm auth uses npm Trusted Publishing via OIDC. Configure this
-      # repository and workflow as a Trusted Publisher on npmjs.com.
+      # npm auth uses the NPM_TOKEN repository secret. Create an npm
+      # Automation token with publish access and store it as NPM_TOKEN.
       - name: Release
         run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  github-package:
-    needs: release
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-      packages: write
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22.14.0'
-          cache: npm
-          registry-url: 'https://npm.pkg.github.com'
-          scope: '@s1mon009'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build
-        run: npm run build
-
-      - name: Publish to GitHub Packages
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   docker-publish:
     needs: release
