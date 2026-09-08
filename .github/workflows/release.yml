@@ -6,7 +6,7 @@ on:
 
 concurrency:
   group: release-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -21,7 +21,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
+          persist-credentials: true
 
       - uses: actions/setup-node@v4
         with:
@@ -32,6 +34,12 @@ jobs:
       - run: npm ci
       - run: npm run validate
       - run: npm run build
+
+      - name: Sync branch state
+        run: |
+          git fetch origin main --tags --force
+          git checkout main
+          git reset --hard origin/main
 
       # semantic-release reads Conventional Commits since the last tag to
       # decide the next version (or skip entirely if nothing warrants a
