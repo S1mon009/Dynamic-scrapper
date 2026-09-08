@@ -24,6 +24,32 @@
 * **release:** publish package to GitHub Packages ([6fe4602](https://github.com/S1mon009/Dynamic-scrapper/commit/6fe4602be0dafcad7996255d46e8f9d8e0c39b98))
 * **release:** publish package to GitHub Packages ([02cd310](https://github.com/S1mon009/Dynamic-scrapper/commit/02cd310a173247a13e0d1ea40a50a14fd757f7c7))
 
+# [1.1.0](https://github.com/S1mon009/Dynamic-scrapper/compare/v1.0.0...v1.1.0) (2026-09-08)
+
+
+### Bug Fixes
+
+* **ci:** normalize GHCR image name to lowercase ([0881d9e](https://github.com/S1mon009/Dynamic-scrapper/commit/0881d9eebf340c3d484a3bde6ea8630b66ea5355))
+* **ci:** normalize GHCR image name to lowercase ([9d3ebbd](https://github.com/S1mon009/Dynamic-scrapper/commit/9d3ebbd871c6d7a1db961f44958febf768cf9357))
+* **ci:** normalize GHCR image name to lowercase ([1e02e5b](https://github.com/S1mon009/Dynamic-scrapper/commit/1e02e5b41376be7d6fd584444dfbbf756948fd2d))
+* **ci:** normalize GHCR image name to lowercase ([a87e611](https://github.com/S1mon009/Dynamic-scrapper/commit/a87e611eebb50de130dd6aa2c7a21ffaa18a182e))
+* **ci:** prevent release commit lint failure ([a01aa88](https://github.com/S1mon009/Dynamic-scrapper/commit/a01aa8868f9dfb7b1e6f10a2861fc85bfae4c197))
+* **ci:** remove npm token from release workflow ([3ad581a](https://github.com/S1mon009/Dynamic-scrapper/commit/3ad581a34346dd303e2a0dd06f0e98cc2531368e))
+* **ci:** sync main before semantic-release ([16ca96f](https://github.com/S1mon009/Dynamic-scrapper/commit/16ca96f888b5b8c1159fbfb4bf38e0eba70278ae))
+* **release:** publish package to npm and GitHub Packages ([d361d84](https://github.com/S1mon009/Dynamic-scrapper/commit/d361d846db223a6877027e2500c3685911fccbb4))
+* **release:** publish package to npm and GitHub Packages ([cf28a73](https://github.com/S1mon009/Dynamic-scrapper/commit/cf28a735e74eeacc3c954bd9f3e0592de59d2bac))
+* **release:** publish package to npm and GitHub Packages ([195607c](https://github.com/S1mon009/Dynamic-scrapper/commit/195607cc6fa16475be9be729542d2d09bba64b00))
+
+
+### Features
+
+* **ci:** add GitHub Packages publishing ([e8226d4](https://github.com/S1mon009/Dynamic-scrapper/commit/e8226d4616cdce6ef0677773d06146e89143ce00))
+* **ci:** add GitHub Packages publishing ([4a5e50c](https://github.com/S1mon009/Dynamic-scrapper/commit/4a5e50c07350713cac0bb4b1821394603127398c))
+* **ci:** add npm publishing ([4ed317d](https://github.com/S1mon009/Dynamic-scrapper/commit/4ed317dbf65825051bc91b8245d0e0e8690e1e7a))
+* **ci:** add npm publishing ([0a104c0](https://github.com/S1mon009/Dynamic-scrapper/commit/0a104c0a9353c98350a9ecf9b44712c52b5ad8bd))
+* **release:** publish package to GitHub Packages ([6fe4602](https://github.com/S1mon009/Dynamic-scrapper/commit/6fe4602be0dafcad7996255d46e8f9d8e0c39b98))
+* **release:** publish package to GitHub Packages ([02cd310](https://github.com/S1mon009/Dynamic-scrapper/commit/02cd310a173247a13e0d1ea40a50a14fd757f7c7))
+
 # 1.0.0 (2026-09-07)
 
 
